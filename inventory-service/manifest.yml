@@ -1,0 +1,9 @@
+applications:
+- name: petstore-inventory
+  instances: 1
+  memory: 512M
+  buildpack: java_buildpack
+  disk_quota: 512M
+  routes:
+  - route: petstore-inventory.cfapps.io
+  stack: cflinuxfs2
