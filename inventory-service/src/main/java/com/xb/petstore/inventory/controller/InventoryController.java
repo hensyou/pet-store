@@ -63,7 +63,7 @@ public class InventoryController {
 	}
 	
 	@PutMapping(value = "/pets/{petId}",consumes = "application/json", produces = "application/json")
-	ResponseEntity<Pet> putPet(@PathVariable Long petId,@RequestBody @Valid Pet Pet) {
+	ResponseEntity<Pet> update(@PathVariable Long petId,@RequestBody @Valid Pet Pet) {
 		try {
 			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
 		} catch (RestClientException | DataIntegrityViolationException | ConstraintViolationException e) {

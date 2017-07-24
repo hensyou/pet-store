@@ -1,6 +1,6 @@
 create sequence if not exists hibernate_sequence;
 
-create table if not exists t_pet(
+create table if not exists pet(
  id serial primary key,
  name varchar(100) UNIQUE,
  description varchar(100),
@@ -8,7 +8,7 @@ create table if not exists t_pet(
  quantity int
 );
 
-insert into t_pet
+insert into pet
  (name, description, price, quantity)
  VALUES 
  ('Black Lab', 'Black Lab', 2000, 5),
