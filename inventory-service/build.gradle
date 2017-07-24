@@ -20,7 +20,7 @@ jar {
 	version = '0.0.1-SNAPSHOT'
 }
 
-group = 'com.bx.inventory'
+group = 'com.bx.petstore.inventory'
 description = 'Pet Inventory Service'
 
 sourceCompatibility = 1.8

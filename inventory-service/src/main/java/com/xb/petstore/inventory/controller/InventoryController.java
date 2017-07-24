@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class InventoryController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	@GetMapping(value = "/pet/{petId}", produces = "application/json")
+	@GetMapping(value = "/pets/{petId}", produces = "application/json")
 	ResponseEntity<Pet> getPetById(@PathVariable Long petId) {
 		Pet foundPet = this.inventoryService.getGetById(petId);
 		if (foundPet != null) {
@@ -51,7 +52,7 @@ public class InventoryController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	@PostMapping(value = "/pet", produces = "application/json")
+	@PostMapping(value = "/pets", produces = "application/json")
 	ResponseEntity<Pet> createPet(@RequestBody @Valid Pet Pet) {
 		try {
 			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
@@ -60,8 +61,18 @@ public class InventoryController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PutMapping(value = "/pets/{petId}",consumes = "application/json", produces = "application/json")
+	ResponseEntity<Pet> putPet(@PathVariable Long petId,@RequestBody @Valid Pet Pet) {
+		try {
+			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
+		} catch (RestClientException | DataIntegrityViolationException | ConstraintViolationException e) {
+			LOG.error("error thrown during create/update of Pet", e);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	@DeleteMapping(value = "/pet/{PetId}", consumes = "application/json")
+	@DeleteMapping(value = "/pets/{petId}")
 	ResponseEntity<String> deletePet(@PathVariable Long petId) {
 		if (this.inventoryService.deletePet(petId))
 			return ResponseEntity.ok("Pet deleted successfully");
