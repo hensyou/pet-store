@@ -1,12 +1,12 @@
 applications:
-- name: petstore-inventory
+- name: petstore-inventory-secure
   instances: 1
   memory: 768M
   buildpack: java_buildpack
   disk_quota: 1024M
   path: build/libs/inventory-service-0.0.1-SNAPSHOT.jar
   routes:
-  - route: petstore-inventory.cfapps.io
+  - route: petstore-inventory-secure.cfapps.io
   stack: cflinuxfs2
   services: 
   - petstore-mysql

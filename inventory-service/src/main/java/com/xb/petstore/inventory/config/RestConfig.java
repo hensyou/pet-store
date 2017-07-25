@@ -22,6 +22,7 @@ public class RestConfig {
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**", config);
+        
         return new CorsFilter(source);
     }
 }

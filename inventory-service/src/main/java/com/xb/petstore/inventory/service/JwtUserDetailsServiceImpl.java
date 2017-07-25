@@ -11,7 +11,6 @@ import com.xb.petstore.inventory.repo.UserRepository;
 import com.xb.petstore.inventory.security.JwtUserFactory;
 
 /**
- * Created by stephan on 20.03.16.
  */
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {

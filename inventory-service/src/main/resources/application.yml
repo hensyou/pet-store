@@ -1,4 +1,7 @@
 debug: true
+logging:
+ level:
+   org.springframework.security: DEBUG
 endpoints:
   sensitive: false
 server:
