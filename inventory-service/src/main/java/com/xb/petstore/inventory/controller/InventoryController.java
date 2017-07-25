@@ -2,18 +2,15 @@ package com.xb.petstore.inventory.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,16 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
 import com.xb.petstore.inventory.model.Pet;
-import com.xb.petstore.inventory.security.JwtTokenUtil;
 import com.xb.petstore.inventory.service.InventoryService;
 
 @RestController
 @RequestMapping("/v1")
 public class InventoryController {
 	private static final Logger LOG = LoggerFactory.getLogger(InventoryController.class);
-	
-	@Value("${jwt.header}")
-	private String tokenHeader;
+
 	@Autowired
 	InventoryService inventoryService;
 
@@ -59,9 +53,9 @@ public class InventoryController {
 	}
 
 	@PostMapping(value = "/pets", produces = "application/json")
-	ResponseEntity<Pet> createPet(@RequestBody @Valid Pet Pet) {
+	ResponseEntity<Pet> createPet(@RequestBody @Valid Pet pet) {
 		try {
-			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
+			return ResponseEntity.ok(this.inventoryService.createUpdatePet(pet));
 		} catch (RestClientException | DataIntegrityViolationException | ConstraintViolationException e) {
 			LOG.error("error thrown during create/update of Pet", e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -69,9 +63,10 @@ public class InventoryController {
 	}
 	
 	@PutMapping(value = "/pets/{petId}",consumes = "application/json", produces = "application/json")
-	ResponseEntity<Pet> update(@PathVariable Long petId,@RequestBody @Valid Pet Pet) {
+	ResponseEntity<Pet> updatePet(@PathVariable Long petId,@RequestBody @Valid Pet pet) {
 		try {
-			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
+			if(null==pet.getId()) pet.setId(petId);
+			return ResponseEntity.ok(this.inventoryService.createUpdatePet(pet));
 		} catch (RestClientException | DataIntegrityViolationException | ConstraintViolationException e) {
 			LOG.error("error thrown during create/update of Pet", e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

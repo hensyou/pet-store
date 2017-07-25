@@ -30,11 +30,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public Pet createUpdatePet(Pet pet) {
-		Pet petFromDB = inventoryRepo.findByName(pet.getName());
-		if (petFromDB != null){
-			//update
-			pet.setId(petFromDB.getId());
-		}
+		//Pet existingPet = inventoryRepo.findOne(pet.getId());
 		pet = inventoryRepo.save(pet);
 		return pet;
 	}
