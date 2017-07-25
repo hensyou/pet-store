@@ -53,9 +53,9 @@ public class InventoryController {
 	}
 
 	@PostMapping(value = "/pets", produces = "application/json")
-	ResponseEntity<Pet> createPet(@RequestBody @Valid Pet Pet) {
+	ResponseEntity<Pet> createPet(@RequestBody @Valid Pet pet) {
 		try {
-			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
+			return ResponseEntity.ok(this.inventoryService.createUpdatePet(pet));
 		} catch (RestClientException | DataIntegrityViolationException | ConstraintViolationException e) {
 			LOG.error("error thrown during create/update of Pet", e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -63,9 +63,10 @@ public class InventoryController {
 	}
 	
 	@PutMapping(value = "/pets/{petId}",consumes = "application/json", produces = "application/json")
-	ResponseEntity<Pet> putPet(@PathVariable Long petId,@RequestBody @Valid Pet Pet) {
+	ResponseEntity<Pet> updatePet(@PathVariable Long petId,@RequestBody @Valid Pet pet) {
 		try {
-			return ResponseEntity.ok(this.inventoryService.createUpdatePet(Pet));
+			if(null==pet.getId()) pet.setId(petId);
+			return ResponseEntity.ok(this.inventoryService.createUpdatePet(pet));
 		} catch (RestClientException | DataIntegrityViolationException | ConstraintViolationException e) {
 			LOG.error("error thrown during create/update of Pet", e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
