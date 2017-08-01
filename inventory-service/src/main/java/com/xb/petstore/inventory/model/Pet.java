@@ -8,15 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pet")
 @NamedStoredProcedureQueries({ @NamedStoredProcedureQuery(
-		name = "getAllPets", 
-		procedureName = "getAllPets",
-		resultClasses=Pet.class,
-		parameters = {}) })
+		name = "getPetsTotalNumber", 
+		procedureName = "getPetsTotalNumber",
+		
+		parameters = {@StoredProcedureParameter(mode = ParameterMode.INOUT, name = "total", type = Integer.class)}) })
 public class Pet implements Serializable {
 	private static final long serialVersionUID = 1L;
 

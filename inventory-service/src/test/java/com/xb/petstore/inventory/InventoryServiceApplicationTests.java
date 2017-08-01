@@ -54,10 +54,9 @@ public class InventoryServiceApplicationTests {
     	List<Pet> allPets= (List<Pet>) inventoryRepo.findAll();
     	System.out.println(allPets.size());
     	Assert.assertNotNull(allPets);
-    	
-    	Object[] allPetsByStoreProc = inventoryRepo.getAllPetsUsingStoreProcedure();
-    	System.out.println(allPetsByStoreProc);
-    	Assert.assertNotNull(allPetsByStoreProc);
+    	int total=0;
+    	int allPetsByStoreProc = inventoryRepo.getAllPetsUsingStoreProcedure(total);
+    	Assert.assertEquals(allPets.size(), allPetsByStoreProc);
     	
     	
     }
