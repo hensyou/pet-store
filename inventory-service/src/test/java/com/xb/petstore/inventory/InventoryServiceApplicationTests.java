@@ -18,7 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.xb.petstore.inventory.model.Pet;
+import com.xb.petstore.inventory.model.PurchaseOrder;
 import com.xb.petstore.inventory.repo.InventoryRepo;
+import com.xb.petstore.inventory.repo.PurchaseOrderRepo;
 
 
 @RunWith(SpringRunner.class)
@@ -30,6 +32,8 @@ public class InventoryServiceApplicationTests {
     private static EntityManager entityManager = null;
     @Autowired
 	InventoryRepo inventoryRepo;
+    @Autowired
+    PurchaseOrderRepo purchaseOrderRepo;
     
     @PersistenceContext
     private EntityManager em;
@@ -66,5 +70,24 @@ public class InventoryServiceApplicationTests {
     	String result=inventoryRepo.invokingFunctionTest("World");
     	
     	System.out.println(result);
+    }
+    
+    @Test
+    public void addingPurchaseOrder(){
+    	PurchaseOrder order1= new PurchaseOrder();
+    	List<Pet> allPets= (List<Pet>) inventoryRepo.findAll();
+    	order1.setFulfilled(false);
+    	order1.setPets(allPets.subList(0, 4));
+    	Assert.assertNotNull(purchaseOrderRepo.save(order1));
+    	
+    }
+    
+    @Test
+    public void verifyPurchaseOrder(){
+    	PurchaseOrder order= purchaseOrderRepo.findOne(1L);
+    	
+    	Assert.assertNotNull(order);
+    	Assert.assertEquals(order.getPets().size(), 4);
+    	
     }
 }
