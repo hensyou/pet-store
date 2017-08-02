@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.junit.Assert;
@@ -30,6 +31,10 @@ public class InventoryServiceApplicationTests {
     @Autowired
 	InventoryRepo inventoryRepo;
     
+    @PersistenceContext
+    private EntityManager em;
+    
+    
     @BeforeClass
     public static void init() {
         //factory = Persistence.createEntityManagerFactory("jpa-db");
@@ -40,7 +45,7 @@ public class InventoryServiceApplicationTests {
     @Ignore
     public void findPetsUsingStored() {
         StoredProcedureQuery storedProcedure = 
-          entityManager
+        		em
             .createStoredProcedureQuery("getAllPets",Pet.class);
 //            .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
 //            .setParameter(1, 2015);
@@ -58,6 +63,8 @@ public class InventoryServiceApplicationTests {
     	int allPetsByStoreProc = inventoryRepo.getAllPetsUsingStoreProcedure(total);
     	Assert.assertEquals(allPets.size(), allPetsByStoreProc);
     	
+    	String result=inventoryRepo.invokingFunctionTest("World");
     	
+    	System.out.println(result);
     }
 }
