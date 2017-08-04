@@ -25,4 +25,12 @@ public class RestConfig {
         
         return new CorsFilter(source);
     }
+	@Bean
+	public DisplayNameBeanPostProcessor displayNameBeanPostProcessor(){
+		return new DisplayNameBeanPostProcessor();
+	}
+	@Bean
+	public InventoryServiceBeanFactoryPostProcessor inventoryServiceBeanFactoryPostProcessor(){
+		return new InventoryServiceBeanFactoryPostProcessor();
+	}
 }

@@ -1,9 +1,10 @@
 debug: false
 logging:
  level:
-#   org.springframework.security: DEBUG
-   javax.persistence: DEBUG
-   org.springframework.data: DEBUG
+   #org.springframework.beans: DEBUG
+   org.springframework.context: DEBUG
+   #javax.persistence: DEBUG
+   #org.springframework.data: DEBUG
 endpoints:
   sensitive: false
 server:

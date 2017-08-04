@@ -66,4 +66,6 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 			httpSecurity.headers().cacheControl();;
 
 	}
+	
+
 }

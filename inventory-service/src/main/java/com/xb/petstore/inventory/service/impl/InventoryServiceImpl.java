@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.xb.petstore.inventory.model.Pet;
@@ -29,6 +32,7 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
+	@Transactional(isolation=Isolation.SERIALIZABLE,propagation=Propagation.REQUIRES_NEW)
 	public Pet createUpdatePet(Pet pet) {
 		//Pet existingPet = inventoryRepo.findOne(pet.getId());
 		pet = inventoryRepo.save(pet);
