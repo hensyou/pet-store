@@ -2,6 +2,8 @@ package com.xb.petstore.inventory.controller;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
@@ -28,9 +30,21 @@ import com.xb.petstore.inventory.service.InventoryService;
 @RequestMapping("/v1")
 public class InventoryController {
 	private static final Logger LOG = LoggerFactory.getLogger(InventoryController.class);
+	
+	
 
 	@Autowired
 	InventoryService inventoryService;
+	
+	@PostConstruct
+	public void init(){
+		LOG.info("InventoryController PostConstruct Called...");
+	}
+	@PreDestroy
+	public void preDestroy(){
+		LOG.info("pre-destroy InventoryController");
+	}
+	
 
 	@GetMapping(value = "/pets", produces = "application/json")
 	ResponseEntity<List<Pet>> getPets() {
