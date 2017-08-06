@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
+import com.xb.petstore.inventory.aspects.LogExecutionTime;
 import com.xb.petstore.inventory.model.Pet;
 import com.xb.petstore.inventory.service.InventoryService;
 
@@ -47,6 +48,7 @@ public class InventoryController {
 	
 
 	@GetMapping(value = "/pets", produces = "application/json")
+	@LogExecutionTime
 	ResponseEntity<List<Pet>> getPets() {
 		List<Pet> returnValue = this.inventoryService.getAllPets();
 		if (returnValue != null) {
